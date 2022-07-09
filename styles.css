@@ -1,0 +1,131 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.italics {
+  font-style: italic;
+  font-size: 1.25em;
+}
+
+.navbar {
+  width: 100%;
+  padding: 1.5rem 0;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  background-color: #243447;
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.navbar #logo {
+  margin-right: auto;
+  margin-left: 2.5rem;
+}
+
+.navbar form {
+  margin-right: 5rem;
+}
+
+#logo {
+  align-self: flex-start;
+}
+
+form {
+  display: flex;
+  gap: 1rem 1.25rem;
+  align-items: center;
+}
+
+form input,
+form select {
+  font-size: 1.25rem;
+  color: lightslategrey;
+}
+
+form button {
+  border: none;
+  background-color: #c51f5d;
+  color: #fff;
+  border-radius: 25px;
+  padding: 10px 15px;
+}
+
+form button:hover {
+  background-color: #fff;
+  color: #243447;
+  cursor: pointer;
+}
+
+.exercises {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin: 1rem 1.25rem;
+}
+
+.card {
+  box-sizing: border-box;
+  max-width: 30%;
+  background-color: #f6f6f6;
+  margin: 1rem 0;
+}
+
+.img img {
+  max-width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.exercise-info-container ul {
+  list-style: none;
+  margin: 1.5rem 1rem;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  width: 50px;
+  height: 50px;
+
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background-color: #44aaee;
+
+  margin: 5px;
+  transition: 0.4s;
+
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pagination button:hover,
+.pagination button.paginationArrows:hover {
+  background-color: #44eeaa;
+}
+
+.pagination button.active {
+  background-color: #44eeaa;
+  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pagination button.paginationArrows {
+  background-color: orangered;
+  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
