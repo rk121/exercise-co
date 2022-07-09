@@ -41,7 +41,7 @@ window.onload = async function () {
       wrapper.innerHTML += `
       <div class="card">
             <div class="img">
-              <img src="${exercise.gifUrl}" onerror="this.onerror=null;this.src='./demo.gif';" alt="${exercise.name}" />
+              <img src="${exercise.gifUrl}" onerror="this.onerror=null;this.src='./images/demo.gif';" alt="${exercise.name}" />
             </div>
             <div class="exercise-info-container">
               <ul class="exercise-info">
