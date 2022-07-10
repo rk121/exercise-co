@@ -1,14 +1,48 @@
 window.onload = async function () {
   const searchBox = document.querySelector("#search");
   const submitBtn = document.querySelector("#submit");
-  const exerciseCards = document.querySelector(".exercises");
+  const exerciseContainer = document.querySelector(".exercises");
   const paginationBtns = document.querySelector(".pagination");
   const sortBtn = document.querySelector("#sort-order");
+  const filters = document.querySelector("#filter-form");
+  const exerciseCards = document.querySelectorAll(".card");
 
   const rows = 15;
   let currentPage = 1;
 
-  let excerises = {};
+  let filteredExercises;
+  const filterList = [];
+
+  let exercises = [
+    {
+      bodyPart: "waist",
+      equipment: "body weight",
+      id: "0001",
+      name: "a",
+      target: "abs",
+    },
+    {
+      bodyPart: "back",
+      equipment: "barbell",
+      id: "0001",
+      name: "b",
+      target: "lats",
+    },
+    {
+      bodyPart: "lower arms",
+      equipment: "dumbell",
+      id: "0001",
+      name: "c",
+      target: "biceps",
+    },
+    {
+      bodyPart: "legs",
+      equipment: "barbell",
+      id: "0001",
+      name: "d",
+      target: "forearms",
+    },
+  ];
 
   let sortOrder = "ascending";
 
@@ -20,14 +54,16 @@ window.onload = async function () {
     },
   };
 
-  await fetch("https://exercisedb.p.rapidapi.com/exercises", options)
-    .then((response) => response.json())
-    .then((response) => {
-      excerises = response;
-      displayExercises(excerises, exerciseCards, rows, currentPage);
-      setUpPagination(excerises, paginationBtns, rows);
-    })
-    .catch((err) => console.log(err));
+  // await fetch("https://exercisedb.p.rapidapi.com/exercises", options)
+  //   .then((response) => response.json())
+  //   .then((response) => {
+  //     exercises = response;
+  //     displayExercises(exercises, exerciseContainer, rows, currentPage);
+  //     setUpPagination(exercises, paginationBtns, rows);
+  //   })
+  //   .catch((err) => console.log(err));
+
+  displayExercises(exercises, exerciseContainer, rows, currentPage);
 
   function displayExercises(data, wrapper, rowsPerPage, page) {
     wrapper.innerHTML = "";
@@ -65,6 +101,7 @@ window.onload = async function () {
     wrapper.innerHTML = "";
     let pageCount = Math.ceil(items.length / rowsPerPage);
     const paginationRange = 4;
+
     const minRange =
       currentPage - paginationRange < 1 ? 1 : currentPage - paginationRange;
     const maxRange =
@@ -72,7 +109,7 @@ window.onload = async function () {
         ? pageCount
         : currentPage + paginationRange;
 
-    if (currentPage > 1) {
+    if (currentPage > 1 && pageCount > 4) {
       let prevBtn = paginationBtn(currentPage - 1, items, "<");
       let firstPage = paginationBtn(1, items, "<<");
       prevBtn.classList.add("paginationArrows");
@@ -86,7 +123,7 @@ window.onload = async function () {
       wrapper.append(btn);
     }
 
-    if (currentPage < pageCount) {
+    if (currentPage < pageCount && pageCount > 4) {
       let nextBtn = paginationBtn(currentPage + 1, items, ">");
       let lastPage = paginationBtn(pageCount, items, ">>");
       nextBtn.classList.add("paginationArrows");
@@ -106,8 +143,8 @@ window.onload = async function () {
 
     btn.addEventListener("click", function (e) {
       currentPage = page;
-      displayExercises(items, exerciseCards, rows, currentPage);
-      // let currentBtn = document.querySelector(".pagination button.active");
+      displayExercises(items, exerciseContainer, rows, currentPage);
+      // let currentBtn = document.qurySelector(".pagination button.active");
       // currentBtn.classList.remove("active");
 
       setUpPagination(items, paginationBtns, rows);
@@ -119,10 +156,11 @@ window.onload = async function () {
   }
 
   function sortByAlpha() {
+    const sortExercise = filteredExercises ? filteredExercises : exercises;
     let sortedExercise;
     if (sortOrder === "descending") {
       sortOrder = "ascending";
-      sortedExercise = excerises.sort((a, b) => {
+      sortedExercise = sortExercise.sort((a, b) => {
         if (a.name < b.name) {
           return -1;
         }
@@ -133,7 +171,7 @@ window.onload = async function () {
       });
     } else {
       sortOrder = "descending";
-      sortedExercise = excerises.sort((a, b) => {
+      sortedExercise = sortExercise.sort((a, b) => {
         if (a.name > b.name) {
           return -1;
         }
@@ -143,8 +181,50 @@ window.onload = async function () {
         return 0;
       });
     }
-    displayExercises(sortedExercise, exerciseCards, rows, currentPage);
+    displayExercises(sortedExercise, exerciseContainer, rows, currentPage);
   }
 
-  sortBtn.addEventListener("click", sortByAlpha);
+  filters.addEventListener("change", (e) => {
+    const filterBy = e.target.getAttribute("name");
+    if (e.target.checked && !filterList.includes(filterBy)) {
+      filterList.push(filterBy);
+      filterExercises(filterList);
+    } else if (filterList.indexOf(filterBy) > -1) {
+      const index = filterList.indexOf(filterBy);
+      filterList.splice(index, 1);
+    }
+
+    if (filterList.length > 0) {
+      filterExercises(filterList);
+    } else {
+      filteredExercises = null;
+      displayExercises(exercises, exerciseContainer, rows, currentPage);
+    }
+  });
+
+  function filterExercises(arrayOfFilters) {
+    console.log(filterList);
+
+    filteredExercises = exercises.filter((excercise) => {
+      return filterList.some((filter) => {
+        return Object.values(excercise).includes(filter);
+      });
+    });
+
+    displayExercises(filteredExercises, exerciseContainer, rows, currentPage);
+    setUpPagination(filteredExercises, paginationBtns, rows);
+  }
+
+  sortBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    sortByAlpha();
+  });
+
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const searchBy = searchBox.value;
+    filterList.push(searchBy);
+    searchBox.value = "";
+    filterExercises(filterList);
+  });
 };
