@@ -1,6 +1,6 @@
 window.onload = async function () {
   const searchBox = document.querySelector("#search");
-  const submitBtn = document.querySelector("#submit");
+  const searchBtn = document.querySelector("#submit");
   const exerciseContainer = document.querySelector(".exercises");
   const paginationBtns = document.querySelector(".pagination");
   const sortBtn = document.querySelector("#sort-order");
@@ -12,6 +12,7 @@ window.onload = async function () {
 
   let filteredExercises;
   const filterList = [];
+  let currentSearchValue = "";
 
   let exercises = [
     {
@@ -203,28 +204,42 @@ window.onload = async function () {
   });
 
   function filterExercises(arrayOfFilters) {
-    console.log(filterList);
-
     filteredExercises = exercises.filter((excercise) => {
       return filterList.some((filter) => {
-        return Object.values(excercise).includes(filter);
+        return Object.values(excercise).find((element) =>
+          element.includes(filter)
+        );
       });
     });
-
+    console.log(filteredExercises);
     displayExercises(filteredExercises, exerciseContainer, rows, currentPage);
     setUpPagination(filteredExercises, paginationBtns, rows);
   }
+
+  console.log(Object.values(exercises[0]));
 
   sortBtn.addEventListener("click", (e) => {
     e.preventDefault();
     sortByAlpha();
   });
 
-  submitBtn.addEventListener("click", (e) => {
+  searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const searchBy = searchBox.value;
-    filterList.push(searchBy);
-    searchBox.value = "";
-    filterExercises(filterList);
+
+    if (currentSearchValue !== "") {
+      const index = filterList.indexOf(currentSearchValue);
+      filterList.splice(index, 1);
+    }
+
+    if (searchBy !== "") {
+      currentSearchValue = searchBy;
+      filterList.push(searchBy);
+      filterExercises(filterList);
+
+      searchBox.value = "";
+    } else {
+      displayExercises(exercises, exerciseContainer, rows, currentPage);
+    }
   });
 };
