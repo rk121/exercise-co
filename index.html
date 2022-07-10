@@ -13,76 +13,121 @@
       <form>
         <label for="search">Search for Exercises: </label>
         <input type="text" id="search" placeholder="Search for an exercise" />
-        <label for="filterOption">Filter by:</label>
-        <select id="filterOption" name="filterOption">
-          <option value="all">All Excercises</option>
-          <option value="name">Name</option>
-          <option value="body-part">Body Part</option>
-          <option value="target">Target</option>
-          <option value="equipment">Equipment</option>
-        </select>
         <button id="submit">Search</button>
       </form>
     </div>
-    <div class="exercises">
-      <div class="card">
-        <div class="img">
-          <img src="./demo.gif" alt="" />
+    <div class="sort-by">
+      <button id="sort-order">
+        <img
+          src="./images/sort.png"
+          alt="Sort Icon"
+          width="25px"
+          height="25px"
+        />
+      </button>
+    </div>
+    <div id="filters">
+      <form id="filter-form">
+        <fieldset id="">
+          <legend>Body Part</legend>
+          <label for="waist">
+            <input type="checkbox" name="waist" id="waist" />
+            Waist
+          </label>
+          <label for="arms">
+            <input type="checkbox" name="arms" id="arms" />
+            Arms
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Equipment</legend>
+          <label for="body-weight">
+            <input type="checkbox" name="body-weight" id="body-weight" />
+            Body Weight
+          </label>
+          <label for="dumbell">
+            <input type="checkbox" name="dumbell" id="dumbell" />
+            Dumbell
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Target</legend>
+          <label for="chest">
+            <input type="checkbox" name="chest" id="chest" />
+            Chest
+          </label>
+          <label for="abs">
+            <input type="checkbox" name="abs" id="abs" />
+            Abs
+          </label>
+          <label for="back">
+            <input type="checkbox" name="back" id="back" />
+            Back
+          </label>
+        </fieldset>
+      </form>
+    </div>
+    <div id="exercise-container">
+      <div class="exercises">
+        <div class="card">
+          <div class="img">
+            <img src="./demo.gif" alt="" />
+          </div>
+          <div class="exercise-info-container">
+            <ul class="exercise-info">
+              <li class="name">
+                Exercise: <span id="exercise-name">Sit-up</span>
+              </li>
+              <li class="Body Part">Body Part: Waist</li>
+              <li class="equipment">Equipment: Body Weight</li>
+              <li class="target">Target: Abs</li>
+            </ul>
+          </div>
         </div>
-        <div class="exercise-info-container">
-          <ul class="exercise-info">
-            <li class="name">
-              Exercise: <span id="exercise-name">Sit-up</span>
-            </li>
-            <li class="Body Part">Body Part: Waist</li>
-            <li class="equipment">Equipment: Body Weight</li>
-            <li class="target">Target: Abs</li>
-          </ul>
+        <div class="card">
+          <div class="img">
+            <img src="./demo.gif" alt="" />
+          </div>
+          <div class="exercise-info-container">
+            <ul class="exercise-info">
+              <li class="name">
+                Exercise: <span id="exercise-name">Push up</span>
+              </li>
+              <li class="Body Part">Body Part: Arms</li>
+              <li class="equipment">Equipment: Body Weight</li>
+              <li class="target">Target: Chest</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="img">
-          <img src="./demo.gif" alt="" />
+        <div class="card">
+          <div class="img">
+            <img src="./demo.gif" alt="" />
+          </div>
+          <div class="exercise-info-container">
+            <ul class="exercise-info">
+              <li class="name">
+                Exercise: <span id="exercise-name">Pull up</span>
+              </li>
+              <li class="Body Part">Body Part: Arms</li>
+              <li class="equipment">Equipment: Body Weight</li>
+              <li class="target">Target: Back</li>
+            </ul>
+          </div>
         </div>
-        <div class="exercise-info-container">
-          <ul class="exercise-info">
-            <li class="name">
-              Exercise: <span id="exercise-name">Push up</span>
-            </li>
-            <li class="Body Part">Body Part: Arms</li>
-            <li class="equipment">Equipment: Body Weight</li>
-            <li class="target">Target: Chest</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <div class="img">
-          <img src="./demo.gif" alt="" />
-        </div>
-        <div class="exercise-info-container">
-          <ul class="exercise-info">
-            <li class="name">
-              Exercise: <span id="exercise-name">Pull up</span>
-            </li>
-            <li class="Body Part">Body Part: Arms</li>
-            <li class="equipment">Equipment: Body Weight</li>
-            <li class="target">Target: Back</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <div class="img">
-          <img src="./demo.gif" alt="" />
-        </div>
-        <div class="exercise-info-container">
-          <ul class="exercise-info">
-            <li class="name">
-              Exercise: <span id="exercise-name">Crunch</span>
-            </li>
-            <li class="Body Part">Body Part: Waist</li>
-            <li class="equipment">Equipment: Body Weight</li>
-            <li class="target">Target: Abs</li>
-          </ul>
+        <div class="card">
+          <div class="img">
+            <img src="./demo.gif" alt="" />
+          </div>
+          <div class="exercise-info-container">
+            <ul class="exercise-info">
+              <li class="name">
+                Exercise: <span id="exercise-name">Crunch</span>
+              </li>
+              <li class="Body Part">Body Part: Waist</li>
+              <li class="equipment">Equipment: Body Weight</li>
+              <li class="target">Target: Abs</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -1,14 +1,16 @@
 window.onload = async function () {
   const searchBox = document.querySelector("#search");
-  const filterOptions = document.querySelector("#filterOption");
   const submitBtn = document.querySelector("#submit");
   const exerciseCards = document.querySelector(".exercises");
   const paginationBtns = document.querySelector(".pagination");
+  const sortBtn = document.querySelector("#sort-order");
 
   const rows = 15;
   let currentPage = 1;
 
   let excerises = {};
+
+  let sortOrder = "ascending";
 
   const options = {
     method: "GET",
@@ -35,9 +37,10 @@ window.onload = async function () {
     let end = start + rowsPerPage;
     let paginatedItems = data.slice(start, end);
 
+    // sortBtn.addEventListener("click", sortByAlpha(paginatedItems));
+
     for (let i = 0; i < paginatedItems.length; i++) {
       let exercise = paginatedItems[i];
-      console.log(exercise);
       wrapper.innerHTML += `
       <div class="card">
             <div class="img">
@@ -114,4 +117,34 @@ window.onload = async function () {
 
     return btn;
   }
+
+  function sortByAlpha() {
+    let sortedExercise;
+    if (sortOrder === "descending") {
+      sortOrder = "ascending";
+      sortedExercise = excerises.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      sortOrder = "descending";
+      sortedExercise = excerises.sort((a, b) => {
+        if (a.name > b.name) {
+          return -1;
+        }
+        if (a.name < b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    displayExercises(sortedExercise, exerciseCards, rows, currentPage);
+  }
+
+  sortBtn.addEventListener("click", sortByAlpha);
 };
