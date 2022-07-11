@@ -5,6 +5,8 @@ window.onload = async function () {
   const paginationBtns = document.querySelector(".pagination");
   const sortBtn = document.querySelector("#sort-order");
   const filters = document.querySelector("#filter-form");
+  const overlay = document.querySelector(".overlay");
+  const overlayImg = document.querySelector(".zoomedImg img");
 
   const rows = 15;
   let currentPage = 1;
@@ -41,29 +43,76 @@ window.onload = async function () {
     let end = start + rowsPerPage;
     let paginatedItems = data.slice(start, end);
 
-    // sortBtn.addEventListener("click", sortByAlpha(paginatedItems));
-
     for (let i = 0; i < paginatedItems.length; i++) {
       let exercise = paginatedItems[i];
-      wrapper.innerHTML += `
-      <div class="card">
-            <div class="img">
-              <img src="${exercise.gifUrl}" onerror="this.onerror=null;this.src='./images/demo.gif';" alt="${exercise.name}" />
-            </div>
-            <div class="exercise-info-container">
-              <ul class="exercise-info">
+      const card = document.createElement("div");
+      const imgCard = document.createElement("div");
+      const img = document.createElement("img");
+      const exerciseInfo = document.createElement("div");
+
+      exerciseInfo.innerHTML = `
+      <ul class="exercise-info">
                 <li class="name">
                 <strong>Exercise:</strong> <span class="italics">${exercise.name}</span>
                 </li>
+                <br>
                 <li class="Body Part"><strong>Body Part:</strong> <span class="italics"">${exercise.bodyPart}</span></li>
+                <br>
                 <li class="equipment"><strong>Equipment:</strong> <span class="italics">${exercise.equipment}</span></li>
+                <br>
                 <li class="target"><strong>Target:</strong> <span class="italics">${exercise.target}</span></li>
               </ul>
-            </div>
-          </div>
       `;
+
+      img.src =
+        exercise.gifUrl != undefined
+          ? exercise.gifUrl
+          : "./images/default.image.png";
+      img.onerror = () => {
+        this.onerror = null;
+        this.src = "./images/default_image.png";
+      };
+      img.alt = exercise.name;
+
+      card.classList.add("card");
+      imgCard.classList.add("img");
+      exerciseInfo.classList.add("exercise-info-container");
+
+      imgCard.append(img);
+      card.append(imgCard, exerciseInfo);
+
+      wrapper.append(card);
+
+      img.addEventListener("click", (e) => {
+        const imgSrc = e.target.src;
+        openOverlay(imgSrc);
+      });
     }
   }
+
+  function openOverlay(imgSrc) {
+    overlayImg.src = imgSrc;
+    overlay.style.display = "flex";
+  }
+
+  function closeOverlay() {
+    overlayImg.src = "";
+    overlay.style.display = "none";
+  }
+
+  overlay.addEventListener(
+    "click",
+    (event) => {
+      // If user either clicks X button OR clicks outside the modal window, then close modal by calling closeModal()
+      if (
+        event.target.matches(".closeBtn") ||
+        !event.target.closest(".zoomedImg")
+      ) {
+        closeOverlay();
+      }
+    },
+    false
+  );
 
   function setUpPagination(items, wrapper, rowsPerPage) {
     wrapper.innerHTML = "";

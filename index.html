@@ -16,17 +16,14 @@
         <button id="submit">Search</button>
       </form>
     </div>
-    <div class="sort-by">
-      <button id="sort-order">
-        <img
-          src="./images/sort.png"
-          alt="Sort Icon"
-          width="25px"
-          height="25px"
-        />
-      </button>
+    <div class="overlay">
+      <div class="zoomedImg">
+        <div class="closeBtn">X</div>
+        <img src="" alt="" />
+      </div>
     </div>
     <div id="filters">
+      <h2>Filter By</h2>
       <form id="filter-form">
         <fieldset id="body-part">
           <legend>Body Part</legend>
@@ -185,70 +182,22 @@
         </fieldset>
       </form>
     </div>
+    <div class="sort-by">
+      <button id="sort-order">
+        <img
+          src="./images/sort.png"
+          alt="Sort Icon"
+          width="25px"
+          height="25px"
+        />
+      </button>
+    </div>
     <div id="exercise-container">
       <div class="exercises">
-        <div class="card">
-          <div class="img">
-            <img src="./demo.gif" alt="" />
-          </div>
-          <div class="exercise-info-container">
-            <ul class="exercise-info">
-              <li class="name">
-                Exercise: <span id="exercise-name">Sit-up</span>
-              </li>
-              <li class="body-part">Body Part: Waist</li>
-              <li class="equipment">Equipment: Body Weight</li>
-              <li class="target">Target: Abs</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="img">
-            <img src="./demo.gif" alt="" />
-          </div>
-          <div class="exercise-info-container">
-            <ul class="exercise-info">
-              <li class="name">
-                Exercise: <span id="exercise-name">Push up</span>
-              </li>
-              <li class="Body Part">Body Part: Arms</li>
-              <li class="equipment">Equipment: Body Weight</li>
-              <li class="target">Target: Chest</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="img">
-            <img src="./demo.gif" alt="" />
-          </div>
-          <div class="exercise-info-container">
-            <ul class="exercise-info">
-              <li class="name">
-                Exercise: <span id="exercise-name">Pull up</span>
-              </li>
-              <li class="Body Part">Body Part: Arms</li>
-              <li class="equipment">Equipment: Body Weight</li>
-              <li class="target">Target: Back</li>
-            </ul>
-          </div>
-        </div>
-        <div class="card">
-          <div class="img">
-            <img src="./demo.gif" alt="" />
-          </div>
-          <div class="exercise-info-container">
-            <ul class="exercise-info">
-              <li class="name">
-                Exercise: <span id="exercise-name">Crunch</span>
-              </li>
-              <li class="Body Part">Body Part: Waist</li>
-              <li class="equipment">Equipment: Body Weight</li>
-              <li class="target">Target: Abs</li>
-            </ul>
-          </div>
-        </div>
+        <div class="img"></div>
       </div>
     </div>
+
     <div class="pagination"></div>
 
     <script src="./js/config.js"></script>
