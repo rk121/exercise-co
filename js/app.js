@@ -1,12 +1,10 @@
 window.onload = async function () {
   const searchBox = document.querySelector("#search");
   const searchBtn = document.querySelector("#submit");
-  const exerciseWrapper = document.querySelector("#exercise-container");
   const exerciseContainer = document.querySelector(".exercises");
   const paginationBtns = document.querySelector(".pagination");
   const sortBtn = document.querySelector("#sort-order");
   const filters = document.querySelector("#filter-form");
-  const exerciseCards = document.querySelectorAll(".card");
 
   const rows = 15;
   let currentPage = 1;
@@ -14,111 +12,14 @@ window.onload = async function () {
   let searchActive = false;
   let currentSearchTerm;
 
-  let exercises = [
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "chest",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "assisted pull up",
-      target: "glutes",
-    },
-    {
-      bodyPart: "abs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "assisted sit up",
-      target: "glutes",
-    },
-    {
-      bodyPart: "chest",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "assisted sit down",
-      target: "abs",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-    {
-      bodyPart: "upper legs",
-      equipment: "body weight",
-      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
-      id: "3543",
-      name: "bodyweight drop jump squat",
-      target: "glutes",
-    },
-  ];
+  let exercises = [];
 
   let sortOrder = "ascending";
 
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "8a92799449msh491f63a48712988p129f4ajsn6780776ab20a",
+      "X-RapidAPI-Key": config.SECRET_API_KEY,
       "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
     },
   };
