@@ -167,8 +167,10 @@ window.onload = async function () {
     return btn;
   }
 
+  let currentlyDisplayedExercises = exercises;
+
   function sortByAlpha() {
-    const sortExercise = filteredExercises ? filteredExercises : exercises;
+    const sortExercise = currentlyDisplayedExercises;
     let sortedExercise;
     if (sortOrder === "descending") {
       sortOrder = "ascending";
@@ -214,16 +216,19 @@ window.onload = async function () {
     if (searchTerm && filterList.length > 0) {
       const searchResult = filterExercises(exercises, [searchTerm]);
       const filteredData = filterExercises(searchResult, filterList);
+      currentlyDisplayedExercises = filteredData;
 
       displayExercises(filteredData, exerciseContainer, rows, currentPage);
       setUpPagination(filteredData, paginationBtns, rows);
     } else if (!searchTerm && !searchActive && filterList.length > 0) {
       const filteredData = filterExercises(exercises, filterList);
+      currentlyDisplayedExercises = filteredData;
 
       displayExercises(filteredData, exerciseContainer, rows, currentPage);
       setUpPagination(filteredData, paginationBtns, rows);
     } else {
       const searchResult = filterExercises(exercises, [searchTerm]);
+      currentlyDisplayedExercises = filteredData;
 
       displayExercises(searchResult, exerciseContainer, rows, currentPage);
       setUpPagination(searchResult, paginationBtns, rows);
@@ -250,6 +255,7 @@ window.onload = async function () {
       searchActive = false;
       filterAndSearch(filterList);
     } else {
+      currentlyDisplayedExercises = exercises;
       displayExercises(exercises, exerciseContainer, rows, currentPage);
       setUpPagination(exercises, paginationBtns, rows);
     }
@@ -262,6 +268,7 @@ window.onload = async function () {
     } else if (filterList.length > 0) {
       filterAndSearch(filterList);
     } else {
+      currentlyDisplayedExercises = exercises;
       displayExercises(exercises, exerciseContainer, rows, currentPage);
       setUpPagination(exercises, paginationBtns, rows);
     }
