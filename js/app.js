@@ -1,6 +1,7 @@
 window.onload = async function () {
   const searchBox = document.querySelector("#search");
   const searchBtn = document.querySelector("#submit");
+  const exerciseWrapper = document.querySelector("#exercise-container");
   const exerciseContainer = document.querySelector(".exercises");
   const paginationBtns = document.querySelector(".pagination");
   const sortBtn = document.querySelector("#sort-order");
@@ -10,38 +11,105 @@ window.onload = async function () {
   const rows = 15;
   let currentPage = 1;
 
-  let filteredExercises;
-  const filterList = [];
-  let currentSearchValue = "";
+  let searchActive = false;
+  let currentSearchTerm;
 
   let exercises = [
     {
-      bodyPart: "waist",
+      bodyPart: "upper legs",
       equipment: "body weight",
-      id: "0001",
-      name: "a",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "chest",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "assisted pull up",
+      target: "glutes",
+    },
+    {
+      bodyPart: "abs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "assisted sit up",
+      target: "glutes",
+    },
+    {
+      bodyPart: "chest",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "assisted sit down",
       target: "abs",
     },
     {
-      bodyPart: "back",
-      equipment: "barbell",
-      id: "0001",
-      name: "b",
-      target: "lats",
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
     },
     {
-      bodyPart: "lower arms",
-      equipment: "dumbell",
-      id: "0001",
-      name: "c",
-      target: "biceps",
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
     },
     {
-      bodyPart: "legs",
-      equipment: "barbell",
-      id: "0001",
-      name: "d",
-      target: "forearms",
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
+    },
+    {
+      bodyPart: "upper legs",
+      equipment: "body weight",
+      gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/3543.gif",
+      id: "3543",
+      name: "bodyweight drop jump squat",
+      target: "glutes",
     },
   ];
 
@@ -55,16 +123,14 @@ window.onload = async function () {
     },
   };
 
-  // await fetch("https://exercisedb.p.rapidapi.com/exercises", options)
-  //   .then((response) => response.json())
-  //   .then((response) => {
-  //     exercises = response;
-  //     displayExercises(exercises, exerciseContainer, rows, currentPage);
-  //     setUpPagination(exercises, paginationBtns, rows);
-  //   })
-  //   .catch((err) => console.log(err));
-
-  displayExercises(exercises, exerciseContainer, rows, currentPage);
+  await fetch("https://exercisedb.p.rapidapi.com/exercises", options)
+    .then((response) => response.json())
+    .then((response) => {
+      exercises = response;
+      displayExercises(exercises, exerciseContainer, rows, currentPage);
+      setUpPagination(exercises, paginationBtns, rows);
+    })
+    .catch((err) => console.log(err));
 
   function displayExercises(data, wrapper, rowsPerPage, page) {
     wrapper.innerHTML = "";
@@ -145,12 +211,7 @@ window.onload = async function () {
     btn.addEventListener("click", function (e) {
       currentPage = page;
       displayExercises(items, exerciseContainer, rows, currentPage);
-      // let currentBtn = document.qurySelector(".pagination button.active");
-      // currentBtn.classList.remove("active");
-
       setUpPagination(items, paginationBtns, rows);
-
-      // e.target.classList.add("active");
     });
 
     return btn;
@@ -183,63 +244,76 @@ window.onload = async function () {
       });
     }
     displayExercises(sortedExercise, exerciseContainer, rows, currentPage);
+    setUpPagination(sortedExercise, paginationBtns, rows);
   }
-
-  filters.addEventListener("change", (e) => {
-    const filterBy = e.target.getAttribute("name");
-    if (e.target.checked && !filterList.includes(filterBy)) {
-      filterList.push(filterBy);
-      filterExercises(filterList);
-    } else if (filterList.indexOf(filterBy) > -1) {
-      const index = filterList.indexOf(filterBy);
-      filterList.splice(index, 1);
-    }
-
-    if (filterList.length > 0) {
-      filterExercises(filterList);
-    } else {
-      filteredExercises = null;
-      displayExercises(exercises, exerciseContainer, rows, currentPage);
-    }
-  });
-
-  function filterExercises(arrayOfFilters) {
-    filteredExercises = exercises.filter((excercise) => {
-      return filterList.some((filter) => {
-        return Object.values(excercise).find((element) =>
-          element.includes(filter)
-        );
-      });
-    });
-    console.log(filteredExercises);
-    displayExercises(filteredExercises, exerciseContainer, rows, currentPage);
-    setUpPagination(filteredExercises, paginationBtns, rows);
-  }
-
-  console.log(Object.values(exercises[0]));
 
   sortBtn.addEventListener("click", (e) => {
     e.preventDefault();
     sortByAlpha();
   });
 
+  function filterExercises(exercisesArray, filterList) {
+    return exercisesArray.filter((exercise) => {
+      return filterList.some((filter) => {
+        return Object.values(exercise).find((text) => text.includes(filter));
+      });
+    });
+  }
+
+  function filterAndSearch(filterList, searchTerm) {
+    if (searchTerm && filterList.length > 0) {
+      const searchResult = filterExercises(exercises, [searchTerm]);
+      const filteredData = filterExercises(searchResult, filterList);
+
+      displayExercises(filteredData, exerciseContainer, rows, currentPage);
+      setUpPagination(filteredData, paginationBtns, rows);
+    } else if (!searchTerm && !searchActive && filterList.length > 0) {
+      const filteredData = filterExercises(exercises, filterList);
+
+      displayExercises(filteredData, exerciseContainer, rows, currentPage);
+      setUpPagination(filteredData, paginationBtns, rows);
+    } else {
+      const searchResult = filterExercises(exercises, [searchTerm]);
+
+      displayExercises(searchResult, exerciseContainer, rows, currentPage);
+      setUpPagination(searchResult, paginationBtns, rows);
+    }
+  }
+
+  function getFilterList() {
+    const filtersCheckBox = document.querySelectorAll('input[type="checkbox"]');
+    const filterList = [...filtersCheckBox]
+      .filter((filter) => filter.checked)
+      .map((filterInput) => filterInput.getAttribute("name"));
+    return filterList;
+  }
+
   searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    const searchBy = searchBox.value;
-
-    if (currentSearchValue !== "") {
-      const index = filterList.indexOf(currentSearchValue);
-      filterList.splice(index, 1);
-    }
-
-    if (searchBy !== "") {
-      currentSearchValue = searchBy;
-      filterList.push(searchBy);
-      filterExercises(filterList);
-
+    const filterList = getFilterList();
+    if (searchBox.value != "") {
+      searchActive = true;
+      currentSearchTerm = searchBox.value.toLowerCase();
+      filterAndSearch(filterList, currentSearchTerm);
       searchBox.value = "";
+    } else if (filterList.length > 0) {
+      searchActive = false;
+      filterAndSearch(filterList);
     } else {
       displayExercises(exercises, exerciseContainer, rows, currentPage);
+      setUpPagination(exercises, paginationBtns, rows);
+    }
+  });
+
+  filters.addEventListener("change", (e) => {
+    const filterList = getFilterList();
+    if (searchActive) {
+      filterAndSearch(filterList, currentSearchTerm);
+    } else if (filterList.length > 0) {
+      filterAndSearch(filterList);
+    } else {
+      displayExercises(exercises, exerciseContainer, rows, currentPage);
+      setUpPagination(exercises, paginationBtns, rows);
     }
   });
 };

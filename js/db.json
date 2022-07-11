@@ -1,0 +1,32 @@
+{
+  "exercises": [
+    {
+      "bodyPart": "waist",
+      "equipment": "body weight",
+      "id": "0001",
+      "name": "a",
+      "target": "abs"
+    },
+    {
+      "bodyPart": "back",
+      "equipment": "barbell",
+      "id": "0001",
+      "name": "b",
+      "target": "lats"
+    },
+    {
+      "bodyPart": "lower arms",
+      "equipment": "dumbell",
+      "id": "0001",
+      "name": "c",
+      "target": "biceps"
+    },
+    {
+      "bodyPart": "legs",
+      "equipment": "barbell",
+      "id": "0001",
+      "name": "d",
+      "target": "forearms"
+    }
+  ]
+}
