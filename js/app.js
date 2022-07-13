@@ -36,21 +36,22 @@ window.onload = async function () {
     .catch((err) => console.log(err));
 
   function displayExercises(data, wrapper, rowsPerPage, page) {
-    wrapper.innerHTML = "";
-    page--;
+    if (data.length > 0) {
+      wrapper.innerHTML = "";
+      page--;
 
-    let start = rowsPerPage * page;
-    let end = start + rowsPerPage;
-    let paginatedItems = data.slice(start, end);
+      let start = rowsPerPage * page;
+      let end = start + rowsPerPage;
+      let paginatedItems = data.slice(start, end);
 
-    for (let i = 0; i < paginatedItems.length; i++) {
-      let exercise = paginatedItems[i];
-      const card = document.createElement("div");
-      const imgCard = document.createElement("div");
-      const img = document.createElement("img");
-      const exerciseInfo = document.createElement("div");
+      for (let i = 0; i < paginatedItems.length; i++) {
+        let exercise = paginatedItems[i];
+        const card = document.createElement("div");
+        const imgCard = document.createElement("div");
+        const img = document.createElement("img");
+        const exerciseInfo = document.createElement("div");
 
-      exerciseInfo.innerHTML = `
+        exerciseInfo.innerHTML = `
       <ul class="exercise-info">
                 <li class="name">
                 <strong>Exercise:</strong> <span class="italics">${exercise.name}</span>
@@ -64,29 +65,32 @@ window.onload = async function () {
               </ul>
       `;
 
-      img.src =
-        exercise.gifUrl != undefined
-          ? exercise.gifUrl
-          : "./images/default.image.png";
-      img.onerror = () => {
-        this.onerror = null;
-        this.src = "./images/default_image.png";
-      };
-      img.alt = exercise.name;
+        img.src =
+          exercise.gifUrl != undefined
+            ? exercise.gifUrl
+            : "./images/default.image.png";
+        img.onerror = () => {
+          this.onerror = null;
+          this.src = "./images/default_image.png";
+        };
+        img.alt = exercise.name;
 
-      card.classList.add("card");
-      imgCard.classList.add("img");
-      exerciseInfo.classList.add("exercise-info-container");
+        card.classList.add("card");
+        imgCard.classList.add("img");
+        exerciseInfo.classList.add("exercise-info-container");
 
-      imgCard.append(img);
-      card.append(imgCard, exerciseInfo);
+        imgCard.append(img);
+        card.append(imgCard, exerciseInfo);
 
-      wrapper.append(card);
+        wrapper.append(card);
 
-      img.addEventListener("click", (e) => {
-        const imgSrc = e.target.src;
-        openOverlay(imgSrc);
-      });
+        img.addEventListener("click", (e) => {
+          const imgSrc = e.target.src;
+          openOverlay(imgSrc);
+        });
+      }
+    } else {
+      wrapper.innerHTML = "<h3>No exercise found!</h3>";
     }
   }
 
@@ -228,7 +232,7 @@ window.onload = async function () {
       setUpPagination(filteredData, paginationBtns, rows);
     } else {
       const searchResult = filterExercises(exercises, [searchTerm]);
-      currentlyDisplayedExercises = filteredData;
+      currentlyDisplayedExercises = searchResult;
 
       displayExercises(searchResult, exerciseContainer, rows, currentPage);
       setUpPagination(searchResult, paginationBtns, rows);
